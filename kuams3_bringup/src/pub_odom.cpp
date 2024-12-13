@@ -28,8 +28,8 @@ public:
   {
     // Declare and get parameters
     this->declare_parameter<bool>("publish_tf", true);
-    this->declare_parameter<std::string>("base_frame_id", base_frame_id_);
-    this->declare_parameter<std::string>("odom_frame_id", "base_link");
+    this->declare_parameter<std::string>("base_frame_id", "base_footprint");
+    this->declare_parameter<std::string>("odom_frame_id", "odom");
 
     this->get_parameter("publish_tf", publish_tf_);
     this->get_parameter("base_frame_id", base_frame_id_);
