@@ -9,6 +9,8 @@ from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
+    bringup_package_path = get_package_share_path('kuams3_bringup')
+    pub_odom_config_path = bringup_package_path / 'config/config_pub_odom.yaml'
     description_package_path = get_package_share_path('kuams3_description')
     default_model_path = description_package_path / 'urdf/kuams3.xacro'
 
@@ -32,7 +34,8 @@ def generate_launch_description():
     pub_odom_node = Node(
         package='kuams3_bringup',
         executable='pub_odom',
-        name='pub_odom'
+        name='pub_odom',
+        parameters=[pub_odom_config_path]
     )
 
     kuams_bringup_dir = get_package_share_path('kuams3_bringup')

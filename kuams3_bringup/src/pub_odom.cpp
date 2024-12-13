@@ -26,18 +26,31 @@ public:
   PubOdomNode()
   : Node("odometry_publisher")
   {
-    publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", rclcpp::QoS(1));
+    // Declare and get parameters
+    this->declare_parameter<bool>("publish_tf", true);
+    this->declare_parameter<std::string>("base_frame_id", base_frame_id_);
+    this->declare_parameter<std::string>("odom_frame_id", "base_link");
 
-    // publish odometry data and tf transform every 10ms (=100hz)
+    this->get_parameter("publish_tf", publish_tf_);
+    this->get_parameter("base_frame_id", base_frame_id_);
+    this->get_parameter("odom_frame_id", odom_frame_id_);
+
+    // Log the parameter values
+    RCLCPP_INFO(this->get_logger(), "Parameter: publish_tf = %s", publish_tf_ ? "true" : "false");
+    RCLCPP_INFO(this->get_logger(), "Parameter: base_frame_id = %s", base_frame_id_.c_str());
+    RCLCPP_INFO(this->get_logger(), "Parameter: odom_frame_id = %s", odom_frame_id_.c_str());
+
+    // Create publisher and subscriber
+    publisher_ = this->create_publisher<nav_msgs::msg::Odometry>(odom_frame_id_, rclcpp::QoS(1));
+    subscription_ = this->create_subscription<geometry_msgs::msg::Twist>(
+      "rover_odo", rclcpp::SensorDataQoS(), std::bind(&PubOdomNode::rover_odom_callback, this, _1));    
+
+    // Publish odometry data and tf transform every 10ms (=100hz)
     timer_ = this->create_wall_timer(
       10ms, std::bind(&PubOdomNode::timer_callback, this));
 
-    subscription_ = this->create_subscription<geometry_msgs::msg::Twist>(
-      "rover_odo", rclcpp::SensorDataQoS(), std::bind(&PubOdomNode::rover_odom_callback, this, _1));
-
     // Initialize the transform broadcaster
     tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
-
   }
 
 private:
@@ -50,7 +63,7 @@ private:
 
     //next, we'll publish the odometry message over ROS
     msg.header.stamp = current_time;
-    msg.header.frame_id = "odom";
+    msg.header.frame_id = odom_frame_id_;
  
     //set the position
     msg.pose.pose.position.x = x; 
@@ -59,13 +72,17 @@ private:
     msg.pose.pose.orientation = odom_quat;
 
     //set the velocity
-    msg.child_frame_id = "base_footprint";
+    msg.child_frame_id = base_frame_id_;
     msg.twist.twist.linear.x = vx;
     msg.twist.twist.linear.y = vy;
     msg.twist.twist.angular.z = vth;
 
     publisher_->publish(msg);
-    tf_broadcaster_->sendTransform(t);
+
+    if (publish_tf_)
+    {
+      tf_broadcaster_->sendTransform(t);
+    }
   }
 
   void rover_odom_callback(const std::shared_ptr<geometry_msgs::msg::Twist> msg)
@@ -88,8 +105,8 @@ private:
     // Read message content and assign it to
     // corresponding tf variables
     t.header.stamp = current_time;
-    t.header.frame_id = "odom";
-    t.child_frame_id = "base_footprint";
+    t.header.frame_id = odom_frame_id_;
+    t.child_frame_id = base_frame_id_;
 
     t.transform.translation.x = x;
     t.transform.translation.y = y;
@@ -110,6 +127,11 @@ private:
 
     current_time = this->get_clock()->now();
   }
+
+  // Node parameters
+  bool publish_tf_;
+  std::string base_frame_id_;
+  std::string odom_frame_id_;
 
   double vx =  0.0;
   double vy =  0.0;

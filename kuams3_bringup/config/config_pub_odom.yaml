@@ -1,0 +1,5 @@
+pub_odom:
+  ros__parameters:
+    publish_tf: False
+    base_frame_id: base_footprint
+    odom_frame_id: map
