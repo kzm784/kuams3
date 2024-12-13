@@ -30,7 +30,7 @@ def generate_launch_description():
             output='screen',
             parameters=[config_file_path],
             remappings=[
-                ('cmd_vel', '/cmd_vel')
+                ('cmd_vel', '/rover_twist')
             ]
         ),
     ])
