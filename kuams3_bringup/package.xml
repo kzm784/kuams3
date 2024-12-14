@@ -4,7 +4,7 @@
   <name>kuams3_bringup</name>
   <version>0.0.1</version>
   <description>kuams3_bringup</description>
-  <maintainer email="kazulab10969@outlook.jp">kazuma</maintainer>
+  <maintainer email="kazulab10969@outlook.jp">kazuma yagi</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
