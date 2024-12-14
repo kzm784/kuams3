@@ -2,11 +2,6 @@
 <robot name="mecanum3" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <xacro:include filename="$(find kuams3_description)/urdf/materials.xacro" />
-<!-- <xacro:include filename="$(find kuams3_description)/urdf/mecanum3.trans" /> -->
-<!-- <xacro:include filename="$(find kuams3_description)/urdf/mecanum3.gazebo" /> -->
-<!-- OPTION: LRF TG30 -->
-<!-- <xacro:include filename="$(find vs_rover_options_description)/urdf/lrf/tg30_mecanum3.xacro" /> -->
-
 
 <link name="base_footprint" />
 
