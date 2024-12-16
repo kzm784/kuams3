@@ -41,7 +41,7 @@ public:
     RCLCPP_INFO(this->get_logger(), "Parameter: odom_frame_id = %s", odom_frame_id_.c_str());
 
     // Create publisher and subscriber
-    publisher_ = this->create_publisher<nav_msgs::msg::Odometry>(odom_frame_id_, rclcpp::QoS(1));
+    publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", rclcpp::QoS(1));
     subscription_ = this->create_subscription<geometry_msgs::msg::Twist>(
       "rover_odo", rclcpp::SensorDataQoS(), std::bind(&PubOdomNode::rover_odom_callback, this, _1));    
 
