@@ -4,11 +4,11 @@ from launch.actions import IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 import os
-from ament_index_python.packages import get_package_share_directory, get_package_share_path
+from ament_index_python.packages import get_package_share_directory
 import yaml
 
 def generate_launch_description():
-    # Include rviz_MID660_launch.py from livox_ros_driver2 with custom user_config_path
+    # Include rviz_MID660_launch.py from livox_ros_driver2
     livox_driver_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('livox_ros_driver2'), 'launch_ROS2', 'rviz_MID360_launch.py')
