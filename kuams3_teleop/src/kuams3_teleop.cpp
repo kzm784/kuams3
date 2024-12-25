@@ -9,13 +9,15 @@ public:
     Kuams3Teleop() : Node("kuams3_teleop")
     {
         // Declare and get parameters
-        this->declare_parameter<int>("axis_linear", 1);
+        this->declare_parameter<int>("axis_linear_x", 1);
+        this->declare_parameter<int>("axis_linear_y", 2);
         this->declare_parameter<int>("axis_angular", 0);
         this->declare_parameter<int>("axis_deadman", 4);
         this->declare_parameter<double>("scale_linear", 0.3);
         this->declare_parameter<double>("scale_angular", 0.9);
 
-        this->get_parameter("axis_linear", linear_axis_);
+        this->get_parameter("axis_linear_x", linear_x_axis_);
+        this->get_parameter("axis_linear_y", linear_y_axis_);
         this->get_parameter("axis_angular", angular_axis_);
         this->get_parameter("axis_deadman", deadman_axis_);
         this->get_parameter("scale_linear", linear_scale_);
@@ -38,7 +40,8 @@ private:
     {
         auto vel = geometry_msgs::msg::Twist();
         vel.angular.z = angular_scale_ * joy->axes[angular_axis_];
-        vel.linear.x = linear_scale_ * joy->axes[linear_axis_];
+        vel.linear.x = linear_scale_ * joy->axes[linear_x_axis_];
+        vel.linear.y = linear_scale_ * joy->axes[linear_y_axis_];
         last_published_ = vel;
         deadman_pressed_ = joy->buttons[deadman_axis_];
     }
@@ -60,7 +63,7 @@ private:
     }
 
     // Node parameters
-    int linear_axis_, angular_axis_, deadman_axis_;
+    int linear_x_axis_, linear_y_axis_, angular_axis_, deadman_axis_;
     double linear_scale_, angular_scale_;
 
     // Publishers and subscribers
