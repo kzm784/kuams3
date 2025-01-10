@@ -37,7 +37,7 @@ ROS 2とNavigation2を用いてナビゲーションを行うためのパッケ�
 - `kuams3_teleop` : Joyコントローラを使用してKUAMS3を操作するためのコード、launchファイルを提供するパッケージです。
 
 ## インストール方法  
-インストールには以下のパッケージのインストールが必要です。  
+以下の手順に沿って各パッケージのインストールを行ってください  
 1. **ROS 2 Humble**のセットアップ:  
    [こちら](https://docs.ros.org/en/humble/Installation.html)の手順に従って、ROS 2 Humbleをインストールしてください。
 
