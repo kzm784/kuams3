@@ -99,7 +99,7 @@ ROS 2とNavigation2を用いてナビゲーションを行うためのパッケ�
 - **Joyコントローラーを用いたkuams3の操縦**:
     JoyコントローラーとPCを接続した後、以下のコマンドを実行しkuams3を操縦することができます。
     ```bash
-    cd kuams_ws
+    cd kuams3_ws
     source install/setup.bash
     ros2 launch kuams3_teleop kuams3_teleop.launch.py
     ```
