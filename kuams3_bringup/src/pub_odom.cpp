@@ -47,7 +47,7 @@ public:
 
     // Publish odometry data and tf transform every 10ms (=100hz)
     timer_ = this->create_wall_timer(
-      10ms, std::bind(&PubOdomNode::timer_callback, this));
+      100ms, std::bind(&PubOdomNode::timer_callback, this));
 
     // Initialize the transform broadcaster
     tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
