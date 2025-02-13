@@ -34,7 +34,31 @@ def generate_launch_description():
         ]
     )
 
+    #     # Pointcloud to LaserScan Node
+    # pointcloud_to_laserscan_node = Node(
+    #     package='pointcloud_to_laserscan',
+    #     executable='pointcloud_to_laserscan_node',
+    #     name='pointcloud_to_laserscan',
+    #     remappings=[('cloud_in', 'livox/lidar'),
+    #                 ('scan', '/livox_scan')],
+    #     parameters=[{
+    #         'target_frame': 'livox_frame',
+    #         'transform_tolerance': 0.01,
+    #         'min_height': -0.2,
+    #         'max_height': 0.2,
+    #         'angle_min': -3.1415,
+    #         'angle_max': 3.1415,
+    #         'angle_increment': 0.0087,
+    #         'scan_time': 0.3333,
+    #         'range_min': 0.45,
+    #         'range_max': 30.0,
+    #         'use_inf': True,
+    #         'inf_epsilon': 1.0
+    #     }]
+    # )
+
     
     return LaunchDescription([
-        livox_ros_driver2_node
+        livox_ros_driver2_node,
+        # pointcloud_to_laserscan_node
     ])

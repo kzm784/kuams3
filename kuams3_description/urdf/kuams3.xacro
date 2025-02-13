@@ -144,13 +144,25 @@
   <axis xyz="-1.0 0.0 0.0"/>
 </joint>
 
+
+<link name="front_sensor_link">
+</link>
+
+<joint name="livox_front_sensor_joint" type="fixed">
+    <!-- <origin rpy="0 0 1.57" xyz="0 0.18 0.45"/> -->
+    <origin rpy="0 0 1.57" xyz="0 0.18 0.45"/>
+    <parent link="base_link"/>
+    <child link="front_sensor_link"/>
+</joint>
+
 <!-- laser -->
 <link name="livox_frame">
 </link>
 
 <joint name="laser_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 -0.1 0.18"/>
-    <parent link="base_link"/>
+    <!-- <origin rpy="0 0.785 0" xyz="0 0 0"/> -->
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="front_sensor_link"/>
     <child link="livox_frame"/>
 </joint>
 
