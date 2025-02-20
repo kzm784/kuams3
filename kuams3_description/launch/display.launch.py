@@ -12,6 +12,7 @@ def generate_launch_description():
     description_package_path = get_package_share_path('kuams3_description')
     default_model_path = description_package_path / 'urdf/kuams3.xacro'
     default_rviz_config_path = description_package_path / 'rviz/display.rviz'
+    rviz_stylesheet = description_package_path / 'rviz/dark.qss'
 
     gui_arg = DeclareLaunchArgument(name='gui', default_value='true', choices=['true', 'false'],
                                     description='Flag to enable joint_state_publisher_gui')
@@ -47,7 +48,8 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', LaunchConfiguration('rvizconfig')],
+        arguments=['-d', LaunchConfiguration('rvizconfig'),
+                '--stylesheet', str(rviz_stylesheet)],
     )
 
     return LaunchDescription([
